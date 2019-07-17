@@ -1,5 +1,5 @@
 import random
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 WALL = [0]
@@ -12,7 +12,11 @@ class Map(ABC):
     def __init__(self):
         self.grid = []
 
-    def get(self):
+    @abstractmethod
+    def init(self):
+        pass
+
+    def get_grid(self):
         return self.grid
 
 
@@ -20,15 +24,16 @@ class Empty(Map):
     """
     Пустая карта
     """
-    def __init__(self):
-        self.grid = []
+    def init(self):
+        pass
 
 
 class Random(Map):
     """
     Случайно генерируемая карта
     """
-    def __init__(self):
+
+    def init(self):
         self.grid = [[0 for _ in range(41)] for _ in range(41)]
         for i in range(41):
             for j in range(41):
@@ -43,7 +48,7 @@ class End(Map):
     """
     Последняя карта в игре
     """
-    def __init__(self):
+    def init(self):
         self.grid = ['000000000000000000000000000000000000000',
                     '0                                     0',
                     '0                                     0',
